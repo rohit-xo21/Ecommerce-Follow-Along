@@ -53,13 +53,3 @@ Welcome to **ShopEase**, an e-commerce platform reimagined! Designed with simpli
 
 ---
 
-## **Installation**  
-
-### **Prerequisites**  
-- Node.js (v14+ recommended)  
-- MongoDB (Atlas or local instance)  
-
-### **Steps**  
-1. Clone the repository:  
-   ```bash
-   git clone https://github.com/yourusername/shopease.git
