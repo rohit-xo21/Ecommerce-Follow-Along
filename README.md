@@ -68,3 +68,18 @@ Welcome to **ShopEase**, an e-commerce platform reimagined! Designed with simpli
 
 
 ---
+
+## Milestone 3: Project Setup for Backend
+
+In this milestone, the backend for the e-commerce application was established with the following:
+
+1. Organized Folder Structure:  
+   Added folders for controllers, models, routes, utils, and middlewares to improve maintainability.
+
+2. Server and Database Setup:  
+   - Built a Node.js and Express server to handle API requests.  
+   - Connected to MongoDB using Mongoose for efficient data storage.
+
+3. Error Handling:  
+   Added basic error handling.
+---
