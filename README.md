@@ -53,3 +53,18 @@ Welcome to **ShopEase**, an e-commerce platform reimagined! Designed with simpli
 
 ---
 
+
+
+
+## Milestone 2: Project Setup and Login Page
+
+### Achievements:
+- Created the basic project skeleton.
+- Created the Login Page:
+  - User is able to input his credentials: username/email and password.
+  - Basic UI styling was applied to keep the design clean and user-friendly.
+  - Added validation so that required fields are filled in.
+- Test login functionality to make sure it works correctly.
+
+
+---
