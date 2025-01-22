@@ -1,5 +1,7 @@
 const express = require("express");
 const connectDB = require("../db/database");
+require('dotenv').config();
+
 
 const app = express();
 const PORT = 2022;
