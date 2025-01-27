@@ -59,12 +59,36 @@ Welcome to **ShopEase**, an e-commerce platform reimagined! Designed with simpli
 ## Milestone 2: Project Setup and Login Page
 
 ### Achievements:
-- Created the basic project skeleton.
-- Created the Login Page:
-  - User is able to input his credentials: username/email and password.
-  - Basic UI styling was applied to keep the design clean and user-friendly.
-  - Added validation so that required fields are filled in.
-- Test login functionality to make sure it works correctly.
+1. Created the basic project skeleton.
+2. Created the Login Page:
+   - User is able to input his credentials: username/email and password.
+   - Basic UI styling was applied using tailwind css.
+3.  Test login functionality to make sure it works correctly.
 
 
 ---
+
+## Milestone 3: Project Setup for Backend
+
+In this milestone, the backend for the e-commerce application was established with the following:
+
+1. Organized Folder Structure:  
+   Added folders for controllers, models, routes, utils, and middlewares to improve maintainability.
+
+2. Server and Database Setup:  
+   - Built a Node.js and Express server to handle API requests.  
+   - Connected to MongoDB using Mongoose for efficient data storage.
+
+3. Error Handling:  
+   Added basic error handling.
+---
+
+## Milestone 4: User Model, Controller, and File Uploads
+
+### Features Implemented
+1. Created a User Model to structure user data.
+2. Set up a User Controller to handle user-related operations.
+3. Configured Multer for file uploads (e.g., profile pictures).
+4. Added routes for creating and fetching users.
+
+--- 
