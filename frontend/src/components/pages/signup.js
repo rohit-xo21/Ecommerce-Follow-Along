@@ -1,34 +1,48 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { Eye, EyeOff, UserPlus } from 'lucide-react';
 
-function Login() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle login logic here
-    console.log('Form submitted:', formData);
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-t-xl shadow-lg p-8 border-b-2 border-black">
+function Signup() {
+    const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState({
+      email: '',
+      password: '',
+      name: ''
+    });
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('Form submitted:', formData);
+    };
+  
+    return (
+    
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
           <div className="flex items-center justify-center mb-8">
             <div className="bg-black rounded-full p-3">
-              <LogIn className="h-8 w-8 text-white" />
+              <UserPlus className="h-8 w-8 text-white" />
             </div>
           </div>
           
-          <h2 className="text-3xl font-bold text-center text-black mb-2">Welcome back</h2>
-          <p className="text-center text-gray-600 mb-8">Sign in to your account</p>
-
+          <h2 className="text-3xl font-bold text-center text-black mb-2">Create an account</h2>
+          <p className="text-center text-gray-600 mb-8">Sign up to get started</p>
+  
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+  
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
@@ -43,16 +57,11 @@ function Login() {
                 required
               />
             </div>
-
+  
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <a href="#" className="text-sm font-medium text-black hover:underline">
-                  Forgot password?
-                </a>
-              </div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -62,6 +71,7 @@ function Login() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition"
                   placeholder="••••••••"
                   required
+                  minLength={8}
                 />
                 <button
                   type="button"
@@ -72,40 +82,24 @@ function Login() {
                 </button>
               </div>
             </div>
-
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="remember-me"
-                checked={formData.rememberMe}
-                onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
-                className="h-4 w-4 text-black border-gray-300 rounded focus:ring-black"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
-
+  
             <button
               type="submit"
               className="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 font-medium"
             >
-              Sign in
+              Sign up
             </button>
           </form>
-        </div>
-
-        <div className="bg-gray-100 rounded-b-xl shadow-lg p-6">
-          <p className="text-center text-sm text-gray-600">
-            Don't have an account?{' '}
-            <a href="/signup" className="font-medium text-black hover:underline">
-              Sign up for free
+  
+          <p className="mt-8 text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <a href="/login" className="font-medium text-black hover:underline">
+              Sign in
             </a>
           </p>
         </div>
       </div>
-    </div>
-  );
-}
-
-export default Login;
+    );
+  }
+  
+export default Signup;
