@@ -92,3 +92,18 @@ In this milestone, the backend for the e-commerce application was established wi
 4. Added routes for creating and fetching users.
 
 --- 
+
+## Milestone 5  
+
+### Achievements:
+1. **Created a Sign-Up Page:**  
+   - Designed a clean and user-friendly interface with fields for:
+     - Name  
+     - Email  
+     - Password  
+
+2. **Implemented Form Validation:**  
+   - Ensured proper email format validation.  
+   - Added password validation with minimum security criteria.  
+
+---
