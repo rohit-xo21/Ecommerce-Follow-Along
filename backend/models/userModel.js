@@ -1,73 +1,72 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+
+function validatePassword(password) {
+    return (
+        /[A-Z]/.test(password) &&
+        /[a-z]/.test(password) &&
+        /[0-9]/.test(password) &&
+        /[!@#$%^&*(){}<>?]/.test(password)
+    );
+}
+
+function validateAge(dob) {
+    const today = new Date();
+    const age = today.getFullYear() - dob.getFullYear();
+    return age >= 18;
+}
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'Please enter your name'],
-    },
     email: {
         type: String,
-        required: [true, 'Please enter your email'],
-        match: [
-            /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-            'Please enter a valid email address',
-        ],
+        required: true,
+        unique: true,
+        match: [/^[a-zA-Z0-9]+$/, "Please enter a valid email"],
     },
     password: {
         type: String,
-        required: [true, "Please enter your password"],
-        minLength: [4, "Password should be greater than 4 characters"],
-        select: false,
+        required: function() {
+            return !this.googleId; // Password is required only for non-Google users
+        },
         validate: {
-            validator: validatePassword, 
-            message:'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character'
+            validator: function(password) {
+                if (this.googleId) return true; // Skip validation for Google users
+                return validatePassword(password);
+            },
+            message: "Password must contain one uppercase letter, one lowercase letter, one number, and one special character"
+        },
+    },
+    dob: {
+        type: Date,
+        required: function() {
+            return !this.googleId; // DOB is required only for non-Google users
+        },
+        validate: {
+            validator: function(dob) {
+                if (this.googleId) return true; // Skip validation for Google users
+                return validateAge(dob);
+            },
+            message: "User must be at least 18 years old"
         }
     },
-    phone: {
-        type: Number
-    },
-    address: [
-        {
-            country: {
-                type: String,
-            },
-            city:{
-                type: String,
-            },
-            address1:{
-                type: String,
-            },
-            address2:{
-                type: String,
-            },
-            zipCode:{
-                type: Number,
-            },
-            addressType:{
-                type: String,
-            },
-    }
-    ],
-    role: {
+    // Google OAuth fields
+    googleId: {
         type: String,
-        default: 'user',
+        sparse: true,
+        unique: true
     },
-    avatar: {
-        public_id: {
-            type: String,
-            required: true,
-        },
-        url: {
-            type: String,
-            required: true,
-        },
+    displayName: String,
+    image: String,
+    // Add any other fields you want to track
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
-
-    
+    lastLogin: {
+        type: Date,
+        default: Date.now
+    }
 });
 
-function validatePassword(password) {
-    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password) && /[!@#$%^&*<>,.:;"']/.test(password);
-}
-
-module.exports = mongoose.model('User', userSchema);
+// Use mongoose.models to prevent model overwriting
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+module.exports = User;
