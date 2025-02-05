@@ -107,3 +107,10 @@ In this milestone, the backend for the e-commerce application was established wi
    - Added password validation with minimum security criteria.  
 
 ---
+
+## Milestone 6
+
+### Features implemented:
+1. Implemented a backend signup endpoint that encrypts passwords using bcrypt and securely stores user data (name, email, etc.) in the database, ensuring privacy and compliance with security best practices.
+
+--- 
