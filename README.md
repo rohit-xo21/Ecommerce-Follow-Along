@@ -107,3 +107,26 @@ In this milestone, the backend for the e-commerce application was established wi
    - Added password validation with minimum security criteria.  
 
 ---
+
+## Milestone 6
+
+### Features implemented:
+1. Implemented a backend signup endpoint that encrypts passwords using bcrypt and securely stores user data (name, email, etc.) in the database, ensuring privacy and compliance with security best practices.
+
+--- 
+
+## Milestone 7
+
+### Features Implemented:
+- **User Login Endpoint**: Developed an API to authenticate users by validating email/username and password, using bcrypt to securely hash and compare passwords.
+- **Security**: Ensured secure storage of passwords by hashing them and implementing proper error handling for invalid credentials.
+
+---
+
+## Milestone 8
+
+### Features Implemented:
+- **Reusable Product Card Component**: Designed a dynamic card component that displays product details such as name, price, image, rating, and review count. It is reusable and accepts props for different product data.
+- **Homepage Layout**: Implemented a responsive grid layout to showcase multiple product cards on the homepage, ensuring a clean and structured design for better user experience.
+
+---
