@@ -1,7 +1,7 @@
 import React from 'react';
 import { TopBanner } from '../components/TopBanner';
 import { Navigation } from '../components/Navbar';
-import { ProductCard } from '../components/ProductCard.js';
+import ProductCard  from '../components/ProductCard.js';
 import { Footer } from '../components/Footer.js';
 
 const Arrivals = [
