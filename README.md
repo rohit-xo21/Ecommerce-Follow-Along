@@ -130,3 +130,12 @@ In this milestone, the backend for the e-commerce application was established wi
 - **Homepage Layout**: Implemented a responsive grid layout to showcase multiple product cards on the homepage, ensuring a clean and structured design for better user experience.
 
 ---
+
+## Milestone 9
+
+### Features Implemented:
+
+- Product input form with validation.
+- Multiple image upload functionality.
+
+---
