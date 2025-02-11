@@ -131,3 +131,12 @@ In this milestone, the backend for the e-commerce application was established wi
 
 ---
 
+## Milestone 9
+
+### Features Implemented:
+
+- Product input form with validation.
+- Multiple image upload functionality.
+
+---
+
