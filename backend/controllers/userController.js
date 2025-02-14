@@ -28,7 +28,7 @@ const signup = async function(req, res) {
     }
 }
 
-const login = async () => {
+const login = async (req,res) => {
     try {
         const {email,password} = req.body;
         
