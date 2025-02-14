@@ -12,6 +12,10 @@ app.get('/', (req,res) => {
     res.send("Hello World")
 })
 
+app.use('/api/products', require('../routes/productRoute'));
+
+app.use('/api/users', require('../routes/userRoute'));
+
 app.listen(PORT, async () => {
     try {
         await connectDB();
