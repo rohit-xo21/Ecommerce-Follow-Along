@@ -35,36 +35,6 @@ const userSchema = new mongoose.Schema({
             message: "Password must contain one uppercase letter, one lowercase letter, one number, and one special character"
         },
     },
-    dob: {
-        type: Date,
-        required: function() {
-            return !this.googleId; // DOB is required only for non-Google users
-        },
-        validate: {
-            validator: function(dob) {
-                if (this.googleId) return true; // Skip validation for Google users
-                return validateAge(dob);
-            },
-            message: "User must be at least 18 years old"
-        }
-    },
-    // Google OAuth fields
-    googleId: {
-        type: String,
-        sparse: true,
-        unique: true
-    },
-    displayName: String,
-    image: String,
-    // Add any other fields you want to track
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    lastLogin: {
-        type: Date,
-        default: Date.now
-    }
 });
 
 

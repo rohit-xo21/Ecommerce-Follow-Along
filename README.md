@@ -140,3 +140,24 @@ In this milestone, the backend for the e-commerce application was established wi
 
 ---
 
+## Milestone 10 
+
+### Achievements
+
+- Created a Mongoose schema for products, including fields like name, description, and price with validation.  
+- Developed a POST endpoint to receive product data and store it in MongoDB.  
+- Implemented validation to ensure data integrity before saving product details.
+
+
+---
+
+
+## Milestone 11 
+
+### Features implemented:
+
+- Created an endpoint to fetch all product data stored in MongoDB and send it to the frontend.  
+- Developed a function on the frontend to retrieve the data and display it dynamically using the product card component.  
+- Enabled seamless integration between the backend and frontend for dynamic product display.
+
+---

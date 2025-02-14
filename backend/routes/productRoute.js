@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../config/multer');
+const protect = require("../middleware/auth");
+
 const {
     createProduct,
     getAllProducts,
@@ -8,10 +11,10 @@ const {
     deleteProduct
 } = require('../controllers/productController');
 
-router.post('/', createProduct);
+router.post('/add', upload.array('images',5), createProduct);
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
+router.put('/:id',protect, updateProduct);
+router.delete('/:id',protect, deleteProduct);
 
 module.exports = router;

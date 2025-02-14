@@ -1,49 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TopBanner } from '../components/TopBanner';
 import { Navigation } from '../components/Navbar';
 import ProductCard  from '../components/ProductCard.js';
 import { Footer } from '../components/Footer.js';
+import axios from 'axios';
 
-const Arrivals = [
-  {
-    id: 1,
-    imageUrl: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80',
-    title: 'Classic Black T-shirt',
-    price: 29.99,
-    originalPrice: 39.99,
-    rating: 4.5,
-    reviewCount: 123
-  },
-  {
-    id: 2,
-    imageUrl: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80',
-    title: 'Slim Fit Jeans',
-    price: 79.99,
-    originalPrice: 99.99,
-    rating: 4.2,
-    reviewCount: 89
-  },
-  {
-    id: 3,
-    imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80',
-    title: 'Cotton Hoodie',
-    price: 49.99,
-    rating: 4.8,
-    reviewCount: 156
-  },
-  {
-    id: 4,
-    imageUrl: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&q=80',
-    title: 'Denim Jacket',
-    price: 89.99,
-    originalPrice: 119.99,
-    rating: 4.6,
-    reviewCount: 78
-  }
-];
 
 function Home() {
+  
+  const [Arrivals, setArrivals] = useState([]);
+
+
+  
+
+  useEffect(() => {
+    const fetchArrivals = async () => {
+      const { data } = await axios.get('http://localhost:2022/api/products');
+      setArrivals(data);
+    };
+
+    fetchArrivals();
+  }, []);
+
   return (
+    
     <div className="min-h-screen bg-gray-50">
       <TopBanner />
       <Navigation />
@@ -109,7 +89,7 @@ function Home() {
               originalPrice={product.originalPrice}
               rating={product.rating}
               reviewCount={product.reviewCount}
-              imageUrl={product.imageUrl}
+              imageUrl={product.images[0]}
             />
           ))}
         </div>
