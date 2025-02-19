@@ -11,8 +11,8 @@ const {
     deleteProduct
 } = require('../controllers/productController');
 
-router.post('/add', upload.array('images',5), createProduct);
-router.get('/', getAllProducts);
+router.post('/add',protect, upload.array('images',5), createProduct);
+router.get('/',protect, getAllProducts);
 router.get('/:id', getProductById);
 router.put('/:id',protect, updateProduct);
 router.delete('/:id',protect, deleteProduct);

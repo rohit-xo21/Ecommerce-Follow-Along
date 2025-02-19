@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { Cookie, Eye, EyeOff, LogIn } from 'lucide-react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,11 +11,29 @@ function Login() {
     rememberMe: false
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Form submitted:', formData);
+    try {
+      const email = formData.email;
+      const password = formData.password;
+      const response = await axios.post( 'http://localhost:2022/api/users/login', { email, password });
+      const token = response.data.token;
+
+      if (token) {
+        // Store the token as a cookie
+        document.cookie = `authToken=${token}; path=/;`;
+        navigate('/');
+      } else {
+        alert('Invalid credentials');
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Login failed, please try again');
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
@@ -60,7 +80,6 @@ function Login() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition"
-                  placeholder="••••••••"
                   required
                 />
                 <button

@@ -4,6 +4,8 @@ import './App.css';
 import Login from './pages/Login.js';
 import Home from './pages/Home.js';
 import Signup from './pages/Signup.js';
+import Shop from './pages/Shop.js';
+import ProductUploadForm from './components/ProductUploadForm.js';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/add-product" element={<ProductUploadForm />}/>
       </Routes>
     </Router>
   );

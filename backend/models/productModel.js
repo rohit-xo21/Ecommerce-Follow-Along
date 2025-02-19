@@ -16,6 +16,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         min: 0
     },
+    originalPrice: {
+        type: Number,
+        min: 0
+    },
     images: [{
         type: String,
         required: true
@@ -33,6 +37,11 @@ const productSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true,
     }
 });
 
