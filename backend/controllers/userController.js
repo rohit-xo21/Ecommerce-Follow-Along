@@ -42,6 +42,13 @@ const login = async (req,res) => {
 
 
         const token = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn: "1h"});
+        res.status(200).cookie('authToken', token, {
+            httpOnly: true, 
+            secure: false,  
+            sameSite: 'lax', 
+            path: '/',
+            expires: new Date(Date.now() + 60 * 60 * 1000)
+        });
 
         res.status(200).json({message: "Login successful", token});
 
@@ -52,5 +59,17 @@ const login = async (req,res) => {
     }
 }
 
-module.exports = { signup,login };
+const profile = async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        res.status(200).json({email: user.email, name: "orim"});
+    } catch(err) {
+        res.status(500).json({message: err.message})
+    }
+        
+};
+
+
+
+module.exports = { signup,login,profile };
 

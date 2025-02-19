@@ -28,7 +28,7 @@ const createProduct = async (req, res) => {
     }
 
     try {
-        const product = new Product({ ...req.body, images: uploadResults });
+        const product = new Product({ ...req.body,email: req.user.email, images: uploadResults });
         await product.save();
         res.status(201).json(product);
     } catch (error) {
@@ -39,7 +39,7 @@ const createProduct = async (req, res) => {
 // Get all products
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find({email: req.user.email});
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });

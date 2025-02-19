@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="border-t">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-4 gap-8">
         <div>
-          <h3 className="font-bold text-xl mb-4">SHOP.CO</h3>
+          <h3 className="font-bold text-xl mb-4">SHOP EASE</h3>
           <p className="text-gray-600 mb-4">
             We have clothes that suits your style and which you're proud to wear.
           </p>
@@ -40,7 +40,7 @@ export function Footer() {
       </div>
       <div className="border-t">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <p className="text-gray-600">© 2024 SHOP.CO All Rights Reserved.</p>
+          <p className="text-gray-600">© 2024 SHOP EASE All Rights Reserved.</p>
           <div className="flex gap-4">
             <img src="https://raw.githubusercontent.com/danielmorsing/payment-icons/master/assets/visa.svg" alt="Visa" className="h-6" />
             <img src="https://raw.githubusercontent.com/danielmorsing/payment-icons/master/assets/mastercard.svg" alt="Mastercard" className="h-6" />

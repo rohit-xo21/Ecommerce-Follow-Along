@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { TopBanner } from '../components/TopBanner';
 import { Navigation } from '../components/Navbar';
-import ProductCard  from '../components/ProductCard.js';
-import { Footer } from '../components/Footer.js';
+import ProductCard from '../components/ProductCard.js';
+import { Footer } from '../components/Footer';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 
-
 function Home() {
-  
-  const [Arrivals, setArrivals] = useState([]);
-
-
-  
+  const [arrivals, setArrivals] = useState([]);
 
   useEffect(() => {
     const fetchArrivals = async () => {
-      const { data } = await axios.get('http://localhost:2022/api/products');
-      setArrivals(data);
+      try {
+        const authToken = Cookies.get('authToken');
+        const config = authToken
+          ? { headers: { "Authorization": `Bearer ${authToken}` } }
+          : {};
+
+        const { data } = await axios.get('http://localhost:2022/api/products', config);
+        setArrivals(data);
+      } catch (error) {
+        console.error('Error fetching arrivals:', error.response?.data || error.message);
+      }
     };
 
     fetchArrivals();
   }, []);
 
   return (
-    
     <div className="min-h-screen bg-gray-50">
-      <TopBanner />
+      {(!Cookies.get('authToken')) ? <TopBanner /> : null}
       <Navigation />
 
       {/* Hero Section */}
@@ -55,10 +59,12 @@ function Home() {
             </div>
           </div>
           <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1523359346063-d879354c0ea5?auto=format&fit=crop&q=80"
-              alt="Fashion Model"
+            <video
+              src="https://res.cloudinary.com/doapnwi6d/video/upload/v1738646541/samples/dance-2.mp4"
               className="rounded-lg w-full shadow-lg"
+              autoPlay
+              loop
+              muted
             />
           </div>
         </div>
@@ -81,7 +87,7 @@ function Home() {
       <section className="max-w-7xl mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold mb-8">NEW ARRIVALS</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {Arrivals.map((product) => (
+          {arrivals.map((product) => (
             <ProductCard
               key={product.id}
               title={product.title}
@@ -92,33 +98,6 @@ function Home() {
               imageUrl={product.images[0]}
             />
           ))}
-        </div>
-      </section>
-
-      {/* Browse by Style */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8">BROWSE BY DRESS STYLE</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative rounded-lg overflow-hidden shadow-lg group">
-            <img
-              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80"
-              alt="Casual"
-              className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-              <span className="text-white text-3xl font-bold">Casual</span>
-            </div>
-          </div>
-          <div className="relative rounded-lg overflow-hidden shadow-lg group">
-            <img
-              src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80"
-              alt="Formal"
-              className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-              <span className="text-white text-3xl font-bold">Formal</span>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -138,7 +117,7 @@ function Home() {
           </div>
         </div>
       </section>
-
+      
       <Footer />
     </div>
   );
