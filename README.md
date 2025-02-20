@@ -181,5 +181,37 @@ In this milestone, we implemented **product editing functionality**, allowing us
 
 - **Created a backend endpoint** to update product details in MongoDB.  
 - **Added an "Edit" button** to each product card on the frontend.  
-- **Auto-filled the form** with existing product data when the edit button was clicked, allowing users to update details before saving.  
+- **Auto-filled the form** with existing product data when the edit button was clicked, allowing users to update details before saving.
 
+---
+
+Here’s the summary for **Milestone 14** to add to your README:  
+
+---
+
+## Milestone 14: Deleting Products  
+
+In this milestone, we implemented **product deletion functionality**, allowing users to remove products from the database. Key implementations:  
+
+- **Created a backend endpoint** to delete a product from MongoDB using its unique ID.  
+- **Added a "Delete" button** to each product card on the frontend.  
+- **Sent the product ID to the backend** when the delete button was clicked to remove the product from the database.  
+
+---
+
+Here's the summary for **Milestone 15** to add to your README:  
+
+---
+
+## Milestone 15: Creating a Navbar Component  
+
+In this milestone, we built a **Navbar component** to enable smooth navigation across different pages in our application. Key implementations:  
+
+- **Created a reusable Nav component** with links to:  
+  - Home  
+  - My Products  
+  - Add Product  
+  - Cart  
+- **Integrated the Navbar into all pages**, ensuring seamless navigation.  
+
+---
