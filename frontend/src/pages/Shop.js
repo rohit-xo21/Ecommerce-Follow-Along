@@ -6,19 +6,25 @@ import Cookies from 'js-cookie';
 import { Trash2, AlertCircle, Edit } from 'lucide-react';
 import axios from 'axios';
 
-function ProductCard({ name, price, images, description, category, onEdit, onDelete }) {
+function ProductCard({ name, price, images, description, category, onEdit, onDelete, onClick }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden relative group">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden relative group" onClick={onClick}>
       <div className="relative">
         <img src={images[0]} alt={name} className="w-full h-48 object-cover" />
         <button
-          onClick={onDelete}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
           className="absolute top-2 right-2 z-10 p-2 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <Trash2 size={16} />
         </button>
         <button
-          onClick={onEdit}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit();
+          }}
           className="absolute top-2 left-2 p-1.5 bg-white bg-opacity-90 rounded-full shadow-sm hover:bg-opacity-100 transition-all duration-200 opacity-0 group-hover:opacity-100"
         >
           <Edit size={16} className="text-gray-700" />
@@ -99,6 +105,10 @@ function Shop() {
     }
   };
 
+  const toDetails = (product) => {
+    navigate(`/product/${product._id}`, { state: { product } });
+  };
+
   return (
     <div>
       <Navigation />
@@ -130,6 +140,7 @@ function Shop() {
                 {...product}
                 onEdit={() => handleEditProduct(product)}
                 onDelete={() => handleDeleteProduct(product._id)}
+                onClick={() => toDetails(product)}
               />
             ))}
           </div>

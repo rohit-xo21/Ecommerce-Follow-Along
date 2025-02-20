@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { TopBanner } from '../components/TopBanner';
 import { Navigation } from '../components/Navbar';
-import ProductCard from '../components/ProductCard.js';
+import ProductCard from '../components/ProductCard';
 import { Footer } from '../components/Footer';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [arrivals, setArrivals] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArrivals = async () => {
@@ -26,6 +28,10 @@ function Home() {
 
     fetchArrivals();
   }, []);
+
+  const toDetails = (product) => {
+    navigate(`/product/${product._id}`);
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -89,13 +95,14 @@ function Home() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {arrivals.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               title={product.title}
               price={product.price}
               originalPrice={product.originalPrice}
               rating={product.rating}
               reviewCount={product.reviewCount}
               imageUrl={product.images[0]}
+              onClick={() => toDetails(product)}
             />
           ))}
         </div>

@@ -7,12 +7,13 @@ function ProductCard({
   originalPrice, 
   rating, 
   reviewCount, 
-  imageUrl 
+  imageUrl ,
+  onClick
 }) {
   const discount = originalPrice ? Math.round((1 - price / originalPrice) * 100) : 0;
   
   return (
-    <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300" onClick={onClick}>
       {/* Image container */}
       <div className="aspect-[4/5] overflow-hidden">
         <img

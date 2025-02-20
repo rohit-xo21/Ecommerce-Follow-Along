@@ -13,7 +13,7 @@ const {
 
 router.post('/add',protect, upload.array('images',5), createProduct);
 router.get('/',protect, getAllProducts);
-router.get('/:id', getProductById);
+router.get('/:id',protect, getProductById);
 router.put('/:id',protect,upload.array('images',5), updateProduct);
 router.delete('/:id',protect, deleteProduct);
 
