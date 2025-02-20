@@ -161,3 +161,25 @@ In this milestone, the backend for the e-commerce application was established wi
 - Enabled seamless integration between the backend and frontend for dynamic product display.
 
 ---
+
+Here's a summary for **Milestone 12** to add to your README:  
+
+---
+
+## Milestone 12: Displaying User-Specific Products  
+
+In this milestone, we implemented a **"My Products"** page that dynamically displays products added by a specific user. To achieve this, we:  
+
+- **Created a backend endpoint** that filters and retrieves products based on the logged-in user's email from MongoDB.  
+- **Fetched the filtered data on the frontend** and displayed it dynamically using the previously created product card component.  
+
+---
+
+## Milestone 13: Editing Uploaded Products  
+
+In this milestone, we implemented **product editing functionality**, allowing users to modify previously uploaded products. Key implementations:  
+
+- **Created a backend endpoint** to update product details in MongoDB.  
+- **Added an "Edit" button** to each product card on the frontend.  
+- **Auto-filled the form** with existing product data when the edit button was clicked, allowing users to update details before saving.  
+
