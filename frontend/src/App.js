@@ -16,6 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/add-product" element={<ProductUploadForm />}/>
+        <Route path="/edit-product/:id" element={<ProductUploadForm />}/>
       </Routes>
     </Router>
   );

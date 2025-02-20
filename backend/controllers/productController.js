@@ -63,10 +63,10 @@ const getProductById = async (req, res) => {
 const updateProduct = async (req, res) => {
     const { name, description, price, category, stock } = req.body;
 
-    const uploadResults = [];
-    if (req.files && req.files.length > 0) {
-        const uploadResults = [];
+    let uploadResults = [];
 
+    // Upload new images if provided
+    if (req.files && req.files.length > 0) {
         for (let i = 0; i < req.files.length; i++) {
             const result = await cloudinary.uploader.upload(req.files[i].path);
             uploadResults.push(result.secure_url);
@@ -74,7 +74,7 @@ const updateProduct = async (req, res) => {
     }
 
     // Validate required fields
-    if (!name || !description || !price || !category || !stock || !uploadResults) {
+    if (!name || !description || !price || !category || !stock) {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -84,15 +84,26 @@ const updateProduct = async (req, res) => {
     }
 
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, { ...req.body, images: uploadResults }, { new: true, runValidators: true });
-        if (!product) {
+        const existingProduct = await Product.findById(req.params.id);
+        if (!existingProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
+
+        // Keep old images if no new ones are uploaded
+        const updatedImages = uploadResults.length > 0 ? uploadResults : existingProduct.images;
+
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            { ...req.body, images: updatedImages },
+            { new: true, runValidators: true }
+        );
+
         res.status(200).json(product);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
+
 
 // Delete a product by ID
 const deleteProduct = async (req, res) => {

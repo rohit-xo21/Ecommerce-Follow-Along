@@ -3,14 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { Navigation } from '../components/Navbar';
 import { Footer } from '../components/Footer.js';
 import Cookies from 'js-cookie';
-
-import { Trash2, AlertCircle } from 'lucide-react';
+import { Trash2, AlertCircle, Edit } from 'lucide-react';
 import axios from 'axios';
 
-function ProductCard({ name, price, images, description, category }) {
+function ProductCard({ name, price, images, description, category, onEdit, onDelete }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <img src={images[0]} alt={name} className="w-full h-48 object-cover" />
+    <div className="bg-white rounded-lg shadow-md overflow-hidden relative group">
+      <div className="relative">
+        <img src={images[0]} alt={name} className="w-full h-48 object-cover" />
+        <button
+          onClick={onDelete}
+          className="absolute top-2 right-2 z-10 p-2 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <Trash2 size={16} />
+        </button>
+        <button
+          onClick={onEdit}
+          className="absolute top-2 left-2 p-1.5 bg-white bg-opacity-90 rounded-full shadow-sm hover:bg-opacity-100 transition-all duration-200 opacity-0 group-hover:opacity-100"
+        >
+          <Edit size={16} className="text-gray-700" />
+        </button>
+      </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold">{name}</h3>
         <p className="text-sm text-gray-600">{category}</p>
@@ -31,19 +44,14 @@ function Shop() {
   const [profile, setProfile] = useState({});
   const authToken = Cookies.get('authToken');
 
-  if (!authToken) {
-    navigate('/login');
-  }
   useEffect(() => {
-  
-    const fetchArrivals = async () => {
-      
-      if (!authToken) {
-        console.error("No authToken found in cookies");
-        return;
-      }
-      try {
+    if (!authToken) {
+      navigate('/login');
+      return;
+    }
 
+    const fetchArrivals = async () => {
+      try {
         const { data } = await axios.get('http://localhost:2022/api/products', {
           headers: {
             "Authorization": `Bearer ${authToken}`
@@ -58,19 +66,13 @@ function Shop() {
     };
 
     const fetchData = async () => {
-      
-      if (!authToken) {
-        console.error("No authToken found in cookies");
-        return;
-      }
-
       try {
         const response = await axios.get('http://localhost:2022/api/users/profile', {
           headers: {
             "Authorization": `Bearer ${authToken}`
           }
         });
-        setProfile(response);
+        setProfile(response.data);
       } catch (error) {
         console.error("Error fetching profile:", error.response?.data || error.message);
       }
@@ -78,10 +80,13 @@ function Shop() {
 
     fetchData();
     fetchArrivals();
-  }, []);
+  }, [authToken, navigate]);
+
+  const handleEditProduct = (product) => {
+    navigate(`/edit-product/${product._id}`, { state: { product } });
+  };
 
   const handleDeleteProduct = async (productId) => {
-    
     try {
       await axios.delete(`http://localhost:2022/api/products/${productId}`, {
         headers: {
@@ -94,13 +99,9 @@ function Shop() {
     }
   };
 
-  if(Cookies.get('authToken')){
-
   return (
     <div>
       <Navigation />
-
-
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Your Products</h2>
@@ -124,15 +125,12 @@ function Shop() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product) => (
-              <div key={product._id} className="relative group">
-                <button
-                  onClick={() => handleDeleteProduct(product._id)}
-                  className="absolute top-2 right-2 z-10 p-2 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <Trash2 size={16} />
-                </button>
-                <ProductCard {...product} />
-              </div>
+              <ProductCard
+                key={product._id}
+                {...product}
+                onEdit={() => handleEditProduct(product)}
+                onDelete={() => handleDeleteProduct(product._id)}
+              />
             ))}
           </div>
         )}
@@ -140,10 +138,6 @@ function Shop() {
       <Footer />
     </div>
   );
-}
-else {
-  navigate('/login');
-}
 }
 
 export default Shop;
