@@ -216,7 +216,7 @@ In this milestone, we built a **Navbar component** to enable smooth navigation a
 
 ---
 
-### Milestone 16: Creating a Product Info Page  
+## Milestone 16: Creating a Product Info Page  
 
 In this milestone, we developed a **Product Info Page** that displays detailed information about each product and allows users to select a quantity and add items to the cart. Key implementations:  
 
