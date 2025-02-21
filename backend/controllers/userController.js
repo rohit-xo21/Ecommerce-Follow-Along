@@ -70,6 +70,5 @@ const profile = async (req,res) => {
 };
 
 
-
 module.exports = { signup,login,profile };
 
