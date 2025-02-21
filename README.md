@@ -225,10 +225,6 @@ In this milestone, we developed a **Product Info Page** that displays detailed i
 
 ---
 
-Here's the summary for **Milestone 17** to add to your README:  
-
----
-
 ## Milestone 17: Implementing Cart Functionality  
 
 In this milestone, we built the backend functionality to **add products to the cart** and store them in the database. Key implementations:  
