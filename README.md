@@ -233,3 +233,11 @@ In this milestone, we built the backend functionality to **add products to the c
 - **Developed a backend endpoint** to receive product details and store them in the database when a user adds an item to the cart.  
 
 ---
+
+## Milestone 18: Fetching Cart Items  
+
+In this milestone, we implemented a **backend endpoint** to retrieve all products stored in a user's cart. Key implementations:  
+
+- **Created a backend endpoint** to fetch cart items using the user's email.    
+
+---
