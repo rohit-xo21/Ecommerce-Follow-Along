@@ -2,8 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        garet: ['Garet', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
-}
-
+};

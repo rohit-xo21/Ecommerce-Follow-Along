@@ -224,3 +224,16 @@ In this milestone, we developed a **Product Info Page** that displays detailed i
 - **Added a quantity selector** to let users choose how many units to purchase.  
 
 ---
+
+Here's the summary for **Milestone 17** to add to your README:  
+
+---
+
+## Milestone 17: Implementing Cart Functionality  
+
+In this milestone, we built the backend functionality to **add products to the cart** and store them in the database. Key implementations:  
+
+- **Updated the user schema** to include a cart field for storing selected products. 
+- **Developed a backend endpoint** to receive product details and store them in the database when a user adds an item to the cart.  
+
+---

@@ -33,8 +33,23 @@ function Home() {
     navigate(`/product/${product._id}`);
   }
 
+  const addToCart = (product) => {
+    try {
+      axios.post('http://localhost:2022/api/products/cart', {
+      productId: product._id,
+      quantity: 1
+    }, {
+      headers: {
+        "Authorization": `Bearer ${Cookies.get('authToken')}`
+      }
+    });
+  } catch (error) {
+    console.error('Error adding to cart:', error.response?.data || error.message);
+  }
+};
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" >
       {(!Cookies.get('authToken')) ? <TopBanner /> : null}
       <Navigation />
 
@@ -96,13 +111,14 @@ function Home() {
           {arrivals.map((product) => (
             <ProductCard
               key={product._id}
-              title={product.title}
+              name={product.name}
               price={product.price}
               originalPrice={product.originalPrice}
               rating={product.rating}
               reviewCount={product.reviewCount}
               imageUrl={product.images[0]}
               onClick={() => toDetails(product)}
+              addToCart={() => addToCart(product)}
             />
           ))}
         </div>
