@@ -1,9 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, ShoppingBag, Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const navigate = useNavigate();
+
+  // Fetch cart data to update the cart count
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      try {
+        const token = Cookies.get('authToken');
+        if (!token) return; // No need to fetch if user is not logged in
+
+        const response = await axios.get('http://localhost:2022/api/products/cart', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (response.data && response.data.cart) {
+          // Calculate total number of items in cart
+          const totalItems = response.data.cart.reduce((sum, item) => sum + item.quantity, 0);
+          setCartCount(totalItems);
+        }
+      } catch (error) {
+        console.error('Error fetching cart count:', error);
+      }
+    };
+
+    fetchCartCount();
+
+    // Set up event listener for cart updates
+    window.addEventListener('cartUpdated', fetchCartCount);
+    
+    return () => {
+      window.removeEventListener('cartUpdated', fetchCartCount);
+    };
+  }, []);
 
   return (
     <nav className="border-b">
@@ -48,10 +84,10 @@ export function Navigation() {
             </div>
 
             {/* Shopping cart button */}
-            <button className="relative">
+            <button className="relative" onClick={() => navigate('/cart')}> 
               <ShoppingBag className="w-6 h-6" />
               <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+                {cartCount}
               </span>
             </button>
           </div>
