@@ -241,3 +241,13 @@ In this milestone, we implemented a **backend endpoint** to retrieve all product
 - **Created a backend endpoint** to fetch cart items using the user's email.    
 
 ---
+
+## Milestone 19: Enhancing Cart Functionality  
+
+In this milestone, we implemented the **cart page UI** and enabled quantity adjustments for products. Key implementations:  
+
+- **Created a frontend cart page** to display products using the existing backend API.  
+- **Added `+` and `-` buttons** to allow users to increase or decrease product quantity.  
+- **Developed backend endpoints** to handle quantity updates in the database.  
+
+---  

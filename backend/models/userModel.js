@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Product = require("./productModel");
 
 function validatePassword(password) {
     return (
