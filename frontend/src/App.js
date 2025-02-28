@@ -8,6 +8,7 @@ import Shop from './pages/Shop.js';
 import ProductUploadForm from './components/ProductUploadForm.js';
 import Product from './pages/Product.js';
 import Cart from './pages/Cart.js';
+import Profile from './pages/Profile.js';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/edit-product/:id" element={<ProductUploadForm />}/>
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
         
       </Routes>
     </Router>
