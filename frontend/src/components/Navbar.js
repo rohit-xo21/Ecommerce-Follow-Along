@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ShoppingBag, Menu, X } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -55,7 +55,7 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Right section with search and cart */}
+          {/* Right section with search, profile and cart */}
           <div className="flex items-center gap-4">
             {/* Desktop search */}
             <div className="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2">
@@ -82,6 +82,11 @@ export function Navigation() {
                 {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
+
+            {/* Profile button */}
+            <button className="p-2 hover:bg-gray-100 rounded-full" onClick={() => navigate('/profile')}>
+              <User className="w-5 h-5" />
+            </button>
 
             {/* Shopping cart button */}
             <button className="relative" onClick={() => navigate('/cart')}> 
@@ -113,6 +118,7 @@ export function Navigation() {
             <div className="flex flex-col gap-4">
               <a href="/shop" className="hover:text-gray-600">My Products</a>
               <a href="/add-product" className="hover:text-gray-600">Add Product</a>
+              <a href="/profile" className="hover:text-gray-600">Profile</a>
             </div>
           </div>
         )}

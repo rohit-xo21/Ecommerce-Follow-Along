@@ -251,3 +251,14 @@ In this milestone, we implemented the **cart page UI** and enabled quantity adju
 - **Developed backend endpoints** to handle quantity updates in the database.  
 
 ---  
+
+## Milestone 20: Implementing Profile Page  
+
+In this milestone, we built the **profile page UI** and created an API to fetch user data. Key implementations:  
+
+- **Developed a backend endpoint** to send user details, including email and address.  
+- **Created a frontend profile page** to display user information.  
+- **Displayed profile photo, name, and email** in one section.  
+- **Added an address section** with an "Add Address" button if no addresses exist.  
+
+---  
