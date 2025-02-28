@@ -16,11 +16,39 @@ function validateAge(dob) {
     return age >= 18;
 }
 
+const addressSchema = new mongoose.Schema({
+    country: {
+        type: String,
+        required: true
+    },
+    address1: {
+        type: String,
+        required: true
+    },
+    address2: {
+        type: String,
+        required: false
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    zip: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: ['home', 'work', 'other'],
+        default: 'home'
+    }
+}, { _id: true, timestamps: true });
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-
     },
     email: {
         type: String,
@@ -40,6 +68,11 @@ const userSchema = new mongoose.Schema({
             message: "Password must contain one uppercase letter, one lowercase letter, one number, and one special character"
         },
     },
+    addresses: [addressSchema],
+    googleId: {
+        type: String,
+        sparse: true
+    },
     cart: [
         {
             productId: {
@@ -55,8 +88,7 @@ const userSchema = new mongoose.Schema({
             },
         },
     ],
-});
-
+}, { timestamps: true });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 module.exports = User;

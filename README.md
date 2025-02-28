@@ -272,3 +272,11 @@ In this milestone, we built a **frontend address form** to collect user address 
 - **Enabled navigation** from the profile page’s "Add Address" button to this form.  
 
 ---  
+
+## Milestone 22: Storing User Address  
+
+In this milestone, we built a **backend endpoint** to save user addresses in the database. Key implementations:  
+
+- **Created an API endpoint** to receive address data from the frontend form.  
+
+---  
