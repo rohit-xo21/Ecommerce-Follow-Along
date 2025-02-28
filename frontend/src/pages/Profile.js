@@ -1,9 +1,105 @@
 import React, { useState, useEffect } from 'react';
-import { User, Home, LogOut, Plus, Trash2, Loader } from 'lucide-react';
+import { User, Home, LogOut, Plus, Trash2, Loader, X } from 'lucide-react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Navigation from '../components/Navbar';
 import { Footer } from '../components/Footer';
+
+
+const AddressModal = ({ isOpen, onClose, onSave, newAddress, setNewAddress }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-lg max-w-md w-full animate-fadeIn">
+        <div className="flex justify-between items-center p-6 border-b border-gray-100">
+          <h3 className="text-xl font-bold text-gray-800">Add New Address</h3>
+          <button 
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="Close modal"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        
+        <div className="p-6">
+          <div className="grid grid-cols-1 gap-5 mb-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+              <input
+                placeholder="USA"
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-gray-200"
+                value={newAddress.country}
+                onChange={(e) => setNewAddress({ ...newAddress, country: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Address 1</label>
+              <input
+                placeholder="123 Main St"
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-gray-200"
+                value={newAddress.address1}
+                onChange={(e) => setNewAddress({ ...newAddress, address1: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Address 2</label>
+              <input
+                placeholder="Apartment, suite, etc. (optional)"
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-gray-200"
+                value={newAddress.address2}
+                onChange={(e) => setNewAddress({ ...newAddress, address2: e.target.value })}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <input
+                  placeholder="New York"
+                  className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-gray-200"
+                  value={newAddress.city}
+                  onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
+                <input
+                  placeholder="10001"
+                  className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-gray-200"
+                  value={newAddress.zip}
+                  onChange={(e) => setNewAddress({ ...newAddress, zip: e.target.value })}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Address Type</label>
+              <select
+                className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-gray-200"
+                value={newAddress.type}
+                onChange={(e) => setNewAddress({ ...newAddress, type: e.target.value })}
+              >
+                <option value="home">Home</option>
+                <option value="work">Work</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div className="flex justify-end gap-4">
+            <button className="bg-gray-200 px-6 py-2.5 rounded-lg text-sm" onClick={onClose}>Cancel</button>
+            <button 
+              className="bg-black text-white px-6 py-2.5 rounded-lg text-sm"
+              onClick={onSave}
+              disabled={!newAddress.country || !newAddress.city || !newAddress.address1 || !newAddress.zip || !newAddress.type}
+            >
+              Save Address
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
@@ -13,7 +109,7 @@ const Profile = () => {
     addresses: []
   });
   
-  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [showAddressModal, setShowAddressModal] = useState(false);
   const [newAddress, setNewAddress] = useState({
     street: "",
     city: "",
@@ -47,11 +143,6 @@ const Profile = () => {
         }
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        setUserData({
-          name: "User",
-          email: "user@example.com",
-          addresses: []
-        });
       } finally {
         setLoading(false);
       }
@@ -68,6 +159,14 @@ const Profile = () => {
         
         if (!token) {
           console.error('No auth token found');
+          // For demo purposes, add locally
+          const newAddressWithId = { _id: Date.now().toString(), ...newAddress };
+          setUserData({
+            ...userData,
+            addresses: [...userData.addresses, newAddressWithId]
+          });
+          setNewAddress({ street: "", city: "", state: "", zip: "" });
+          setShowAddressModal(false);
           return;
         }
         
@@ -86,7 +185,7 @@ const Profile = () => {
           });
         } else {
           // Fallback if API doesn't return the expected data structure
-          const newAddressWithId = { id: Date.now(), ...newAddress };
+          const newAddressWithId = { _id: Date.now().toString(), ...newAddress };
           setUserData({
             ...userData,
             addresses: [...userData.addresses, newAddressWithId]
@@ -95,7 +194,7 @@ const Profile = () => {
         
         // Reset form and hide it
         setNewAddress({ street: "", city: "", state: "", zip: "" });
-        setShowAddressForm(false);
+        setShowAddressModal(false);
       } catch (error) {
         console.error('Error adding address:', error);
         alert('Failed to add address. Please try again.');
@@ -110,6 +209,12 @@ const Profile = () => {
       
       if (!token) {
         console.error('No auth token found');
+        // For demo purposes, remove locally
+        const updatedAddresses = userData.addresses.filter(address => address._id !== id);
+        setUserData({
+          ...userData,
+          addresses: updatedAddresses
+        });
         return;
       }
       
@@ -119,7 +224,7 @@ const Profile = () => {
       });
       
       // Update local state
-      const updatedAddresses = userData.addresses.filter(address => address.id !== id);
+      const updatedAddresses = userData.addresses.filter(address => address._id !== id);
       setUserData({
         ...userData,
         addresses: updatedAddresses
@@ -137,9 +242,9 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navigation />
-        <div className="container mx-auto px-4 py-12 flex justify-center items-center min-h-64">
+        <div className="flex-grow flex justify-center items-center">
           <div className="flex flex-col items-center gap-3">
             <Loader className="animate-spin text-gray-500" size={32} />
             <p className="text-gray-500 text-base">Loading profile...</p>
@@ -151,12 +256,13 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navigation />
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-8">My Profile</h1>
+      
+      <div className="container mx-auto px-4 py-12 flex-grow">
+        <h1 className="text-3xl font-bold mb-8 text-center sm:text-left">My Profile</h1>
         
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 mb-8">
+        <div className="bg-white rounded-xl shadow-md border border-gray-100 mb-8 max-w-3xl mx-auto">
           {/* Profile Header */}
           <div className="p-8 border-b border-gray-100">
             <div className="flex items-center space-x-6">
@@ -176,60 +282,12 @@ const Profile = () => {
               <h3 className="text-xl font-medium text-gray-800">My Addresses</h3>
               <button 
                 className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-colors hover:bg-gray-800"
-                onClick={() => setShowAddressForm(!showAddressForm)}
+                onClick={() => setShowAddressModal(true)}
               >
                 <Plus size={16} />
                 <span>Add Address</span>
               </button>
             </div>
-            
-            {/* Address Form */}
-            {showAddressForm && (
-              <div className="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-200">
-                <div className="grid grid-cols-1 gap-5 mb-5">
-                  <input
-                    placeholder="Street Address"
-                    className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
-                    value={newAddress.street}
-                    onChange={(e) => setNewAddress({...newAddress, street: e.target.value})}
-                  />
-                  <div className="grid grid-cols-2 gap-5">
-                    <input
-                      placeholder="City"
-                      className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
-                      value={newAddress.city}
-                      onChange={(e) => setNewAddress({...newAddress, city: e.target.value})}
-                    />
-                    <input
-                      placeholder="State"
-                      className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
-                      value={newAddress.state}
-                      onChange={(e) => setNewAddress({...newAddress, state: e.target.value})}
-                    />
-                  </div>
-                  <input
-                    placeholder="ZIP Code"
-                    className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
-                    value={newAddress.zip}
-                    onChange={(e) => setNewAddress({...newAddress, zip: e.target.value})}
-                  />
-                </div>
-                <div className="flex justify-end gap-4">
-                  <button 
-                    className="bg-gray-200 hover:bg-gray-300 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors"
-                    onClick={() => setShowAddressForm(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    className="bg-black hover:bg-gray-800 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors"
-                    onClick={handleAddAddress}
-                  >
-                    Save Address
-                  </button>
-                </div>
-              </div>
-            )}
             
             {/* Address List */}
             {userData.addresses && userData.addresses.length > 0 ? (
@@ -246,6 +304,7 @@ const Profile = () => {
                     <button 
                       className="text-gray-400 hover:text-red-500 transition-colors p-1.5"
                       onClick={() => handleRemoveAddress(address._id)}
+                      aria-label="Remove address"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -272,6 +331,19 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      
+      {/* Address Modal */}
+      <AddressModal 
+        isOpen={showAddressModal}
+        onClose={() => {
+          setShowAddressModal(false);
+          setNewAddress({ street: "", city: "", state: "", zip: "" });
+        }}
+        onSave={handleAddAddress}
+        newAddress={newAddress}
+        setNewAddress={setNewAddress}
+      />
+      
       <Footer />
     </div>
   );

@@ -262,3 +262,13 @@ In this milestone, we built the **profile page UI** and created an API to fetch 
 - **Added an address section** with an "Add Address" button if no addresses exist.  
 
 ---  
+
+## Milestone 21: Address Form Implementation  
+
+In this milestone, we built a **frontend address form** to collect user address details. Key implementations:  
+
+- **Created an address form page** with input fields for country, city, address1, address2, zip code, and address type.  
+- **Implemented state management** to store form input values.  
+- **Enabled navigation** from the profile page’s "Add Address" button to this form.  
+
+---  
