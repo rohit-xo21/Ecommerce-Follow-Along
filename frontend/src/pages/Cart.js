@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { Loader } from 'lucide-react';
 import CartItem from '../components/CartItem';
 import Navigation from '../components/Navbar';
 
@@ -114,8 +115,14 @@ function CartPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <Navigation />
+        <div className="flex-grow flex justify-center items-center">
+          <div className="flex flex-col items-center gap-3">
+            <Loader className="animate-spin text-gray-500" size={32} />
+            <p className="text-gray-500 text-base">Loading cart...</p>
+          </div>
+        </div>
       </div>
     );
   }

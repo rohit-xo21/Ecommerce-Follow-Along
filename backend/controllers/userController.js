@@ -71,5 +71,27 @@ const profile = async (req,res) => {
 };
 
 
-module.exports = { signup,login,profile };
+const addAddress = async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        user.addresses.push(req.body);
+        await user.save();
+        res.status(200).json({message: "Address added successfully"});
+    } catch(err) {
+        res.status(500).json({message: err.message})
+    }
+};
+
+const deleteAddress = async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        user.addresses.pull(req.params.id);
+        await user.save();
+    } catch(err) {
+        res.status(500).json({message: err.message})
+    }
+};
+
+
+module.exports = { signup,login,profile,addAddress,deleteAddress };
 
