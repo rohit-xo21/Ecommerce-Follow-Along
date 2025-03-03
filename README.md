@@ -291,3 +291,14 @@ In this milestone, we built the **select address page** and structured the backe
 - **Designed a Mongoose schema** to store order details in the database.  
 
 ---  
+
+## Milestone 24: Order Confirmation Page  
+
+In this milestone, we built the **order confirmation page** to display order details. Key implementations:  
+
+- **Displayed ordered products** with their details.  
+- **Showcased the selected delivery address** chosen by the user.  
+- **Calculated and displayed the total order value.**  
+- **Added a "Place Order" button** at the bottom for final order confirmation.  
+
+---  
