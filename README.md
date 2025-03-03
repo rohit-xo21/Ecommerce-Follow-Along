@@ -162,10 +162,6 @@ In this milestone, the backend for the e-commerce application was established wi
 
 ---
 
-Here's a summary for **Milestone 12** to add to your README:  
-
----
-
 ## Milestone 12: Displaying User-Specific Products  
 
 In this milestone, we implemented a **"My Products"** page that dynamically displays products added by a specific user. To achieve this, we:  
@@ -185,10 +181,6 @@ In this milestone, we implemented **product editing functionality**, allowing us
 
 ---
 
-Here’s the summary for **Milestone 14** to add to your README:  
-
----
-
 ## Milestone 14: Deleting Products  
 
 In this milestone, we implemented **product deletion functionality**, allowing users to remove products from the database. Key implementations:  
@@ -196,10 +188,6 @@ In this milestone, we implemented **product deletion functionality**, allowing u
 - **Created a backend endpoint** to delete a product from MongoDB using its unique ID.  
 - **Added a "Delete" button** to each product card on the frontend.  
 - **Sent the product ID to the backend** when the delete button was clicked to remove the product from the database.  
-
----
-
-Here's the summary for **Milestone 15** to add to your README:  
 
 ---
 
