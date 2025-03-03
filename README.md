@@ -280,3 +280,14 @@ In this milestone, we built a **backend endpoint** to save user addresses in the
 - **Created an API endpoint** to receive address data from the frontend form.  
 
 ---  
+
+## Milestone 23: Implementing Place Order Functionality  
+
+In this milestone, we built the **select address page** and structured the backend for order management. Key implementations:  
+
+- **Added a "Place Order" button** inside the cart page to navigate to the select address page.  
+- **Created a select address page** to display all saved addresses and allow users to choose one for delivery.  
+- **Developed a backend endpoint** to fetch and send the user's saved addresses.  
+- **Designed a Mongoose schema** to store order details in the database.  
+
+---  
