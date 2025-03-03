@@ -183,7 +183,7 @@ const SelectAddress = () => {
                   : 'bg-black text-white hover:bg-gray-800 transition-colors'
               }`}
             >
-              Continue to Checkout
+              Continue
             </button>
           </div>
         </div>

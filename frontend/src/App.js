@@ -10,6 +10,7 @@ import Product from './pages/Product.js';
 import Cart from './pages/Cart.js';
 import Profile from './pages/Profile.js';
 import SelectAddress from './pages/SelectAddress.js';
+import OrderConfirmation from './pages/OrderConfirmation.js';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path='/select-address' element={<SelectAddress />}/>
+        <Route path='/order-confirmation' element={<OrderConfirmation />}/>
         
       </Routes>
     </Router>
