@@ -92,6 +92,14 @@ const deleteAddress = async (req,res) => {
     }
 };
 
+const getAddresses = async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        res.status(200).json({addresses: user.addresses});
+    } catch(err) {
+        res.status(500).json({message: err.message})
+    }
+};
 
-module.exports = { signup,login,profile,addAddress,deleteAddress };
+module.exports = { signup,login,profile,addAddress,deleteAddress, getAddresses };
 

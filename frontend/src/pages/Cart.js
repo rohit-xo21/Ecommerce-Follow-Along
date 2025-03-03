@@ -195,9 +195,9 @@ function CartPage() {
               
               <button
                 className="bg-black text-white py-3 px-6 rounded-full text-lg font-medium hover:bg-gray-900 transition-colors"
-                onClick={() => window.location.href = '/checkout'}
+                onClick={() => window.location.href = '/select-address'}
               >
-                Proceed to Checkout
+                Place Order
               </button>
             </div>
           </>

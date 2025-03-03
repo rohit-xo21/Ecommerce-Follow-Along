@@ -9,6 +9,7 @@ import ProductUploadForm from './components/ProductUploadForm.js';
 import Product from './pages/Product.js';
 import Cart from './pages/Cart.js';
 import Profile from './pages/Profile.js';
+import SelectAddress from './pages/SelectAddress.js';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path='/select-address' element={<SelectAddress />}/>
         
       </Routes>
     </Router>
