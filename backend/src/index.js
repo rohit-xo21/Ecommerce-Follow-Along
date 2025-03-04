@@ -12,6 +12,10 @@ app.use(express.json());
 
 
 app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
 ));
 
 
@@ -24,6 +28,8 @@ app.get('/', (req,res) => {
 app.use('/api/products', require('../routes/productRoute'));
 
 app.use('/api/users', require('../routes/userRoute'));
+
+app.use('/api/orders', require('../routes/orderRoute'));
 
 
 
