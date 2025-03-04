@@ -45,6 +45,29 @@ const createOrder = async (req, res) => {
     }
 };
 
+const getUserOrders = async (req, res) => {
+    try {
+        const email = req.user.email;
+        const user = await
+        User.findOne({ email: email });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const orders = await Order.find({ user: user._id });
+
+        res.status(200).json({
+            message: "Orders retrieved successfully",
+            orders
+        });
+    } catch (err) {
+        console.error("Error fetching orders:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 module.exports = {
-    createOrder
+    createOrder,
+    getUserOrders
 };
