@@ -301,3 +301,14 @@ In this milestone, we built the **backend endpoint for placing orders**. Key imp
 - **Saved order details** in the MongoDB order collection using the order schema.  
 
 ---  
+
+## Milestone 26: Fetching User Orders  
+
+In this milestone, we built the **backend endpoint to retrieve user orders**. Key implementations:  
+
+- **Created an API endpoint** that receives the user's data.  
+- **Retrieved the user's `_id`** from the database using their email.  
+- **Fetched all orders** associated with the user's `_id`.  
+- **Sent the user's order details** in the API response.  
+
+---  
