@@ -290,3 +290,14 @@ In this milestone, we built the **order confirmation page** to display order det
 - **Added a "Place Order" button** at the bottom for final order confirmation.  
 
 ---  
+
+## Milestone 25: Implementing Place Order Backend  
+
+In this milestone, we built the **backend endpoint for placing orders**. Key implementations:  
+
+- **Created an API endpoint** to receive product, user, and address details.  
+- **Retrieved the user’s `_id`** using their email.  
+- **Stored each product as a separate order** while using the same delivery address.  
+- **Saved order details** in the MongoDB order collection using the order schema.  
+
+---  
