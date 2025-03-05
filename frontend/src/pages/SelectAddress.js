@@ -189,7 +189,7 @@ const SelectAddress = () => {
         </div>
       </main>
       
-      <Footer />
+
     </div>
   );
 };
