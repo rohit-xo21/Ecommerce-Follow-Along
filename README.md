@@ -312,3 +312,14 @@ In this milestone, we built the **backend endpoint to retrieve user orders**. Ke
 - **Sent the user's order details** in the API response.  
 
 ---  
+
+## Milestone 27: My Orders Page  
+
+In this milestone, we built the **frontend page to display user orders**. Key implementations:  
+
+- **Created a "My Orders" page** to list all user orders.  
+- **Sent a GET request** to the `my-orders` endpoint from the previous milestone.  
+- **Passed the user's email** to fetch their order history.  
+- **Displayed all retrieved orders** on the page. 
+
+---  

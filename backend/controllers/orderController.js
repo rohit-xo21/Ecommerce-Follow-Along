@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 const createOrder = async (req, res) => {
     try {
         const email = req.user.email;
-        const { products, address } = req.body;
+        const { items, shippingAddressId, totalAmount } = req.body;
         
         const user = await User.findOne({ email: email });
 
@@ -14,7 +14,7 @@ const createOrder = async (req, res) => {
 
         const userId = user._id;
 
-        const orderItems = products.map(product => {
+        const orderItems = items.map(product => {
             return {
                 product: product._id,
                 name: product.name,
@@ -23,13 +23,11 @@ const createOrder = async (req, res) => {
                 image: product.image
             };
         });
-        
-        const totalAmount = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
         const order = new Order({
             user: userId,
             orderItems,
-            shippingAddress: address,
+            shippingAddress: shippingAddressId,
             totalAmount
         });
 

@@ -11,6 +11,7 @@ import Cart from './pages/Cart.js';
 import Profile from './pages/Profile.js';
 import SelectAddress from './pages/SelectAddress.js';
 import OrderConfirmation from './pages/OrderConfirmation.js';
+import MyOrders from './pages/MyOrder.js';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path='/select-address' element={<SelectAddress />}/>
         <Route path='/order-confirmation' element={<OrderConfirmation />}/>
+        <Route path='/my-orders' element={<MyOrders />}/>
         
       </Routes>
     </Router>

@@ -97,10 +97,9 @@ const OrderConfirmation = () => {
         navigate('/login');
         return;
       }
-      
-      // Create order with selected address
+
       const orderResponse = await axios.post(
-        'http://localhost:2022/api/orders', 
+        'http://localhost:2022/api/orders/create', 
         { 
           shippingAddressId: selectedAddressId,
           items: cartItems,
@@ -310,7 +309,6 @@ const OrderConfirmation = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };
