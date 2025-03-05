@@ -323,3 +323,15 @@ In this milestone, we built the **frontend page to display user orders**. Key im
 - **Displayed all retrieved orders** on the page. 
 
 ---  
+
+## Milestone 28: Cancel Order Functionality  
+
+In this milestone, we implemented the ability for users to **cancel their placed orders**. Key implementations:  
+
+- **Added a "Cancel Order" button** for each order in the **My Orders** page.  
+- **Hid the cancel button** if the order was already canceled.  
+- **Created a backend endpoint** to handle order cancellations.  
+- **Received the `orderId` from the frontend** and retrieved the order from the database.  
+- **Updated the order status** to `"canceled"` and saved the changes.  
+
+---  
