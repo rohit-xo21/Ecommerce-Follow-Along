@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 function Home() {
   const [arrivals, setArrivals] = useState([]);
   const navigate = useNavigate();
@@ -51,7 +52,6 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-50" >
       {(!Cookies.get('authToken')) ? <TopBanner /> : null}
-      <Navigation />
 
       {/* Hero Section */}
       <section className="bg-white">
@@ -141,7 +141,7 @@ function Home() {
         </div>
       </section>
       
-      <Footer />
+
     </div>
   );
 }

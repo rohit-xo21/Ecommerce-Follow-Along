@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Home, ChevronLeft, Loader, ShoppingBag, CreditCard, Check } from 'lucide-react';
+import { Home, ChevronLeft, Loader, ShoppingBag, CreditCard, Check, DollarSign } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import Navigation from '../components/Navbar';
-import { Footer } from '../components/Footer';
+
 
 const OrderConfirmation = () => {
   const [loading, setLoading] = useState(true);
@@ -13,6 +12,7 @@ const OrderConfirmation = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [cartTotal, setCartTotal] = useState(0);
   const [error, setError] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState('cod'); // Default to cash on delivery
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,14 +42,12 @@ const OrderConfirmation = () => {
         if (cartResponse.data.cart && cartResponse.data.cart.length > 0) {
           setCartItems(cartResponse.data.cart);
           
-
           const total = cartResponse.data.cart.reduce(
             (sum, item) => sum + (item.productId.price * item.quantity), 
             0
           );
           setCartTotal(total);
         } else {
-
           navigate('/cart');
           return;
         }
@@ -66,7 +64,6 @@ const OrderConfirmation = () => {
           if (address) {
             setSelectedAddress(address);
           } else {
-
             navigate('/select-address');
             return;
           }
@@ -82,28 +79,116 @@ const OrderConfirmation = () => {
     fetchData();
   }, [navigate, selectedAddressId]);
 
-  const handlePlaceOrder = async () => {
-    if (!selectedAddressId) {
-      alert('Please select a shipping address');
-      return;
-    }
-    
+  const initializeRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      
+      script.onload = () => {
+        resolve(true);
+      };
+      
+      script.onerror = () => {
+        resolve(false);
+        console.error('Razorpay SDK failed to load');
+      };
+      
+      document.body.appendChild(script);
+    });
+  };
+
+  const handleRazorpayPayment = async () => {
     try {
+      const res = await initializeRazorpay();
+      
+      if (!res) {
+        alert('Razorpay SDK failed to load. Please check your internet connection.');
+        return;
+      }
+      
       setProcessingOrder(true);
       const token = Cookies.get('authToken');
       
-      if (!token) {
-        console.error('No auth token found');
-        navigate('/login');
-        return;
-      }
+      // Create order on your server
+      const orderResponse = await axios.post(
+        'http://localhost:2022/api/payments/razorpay/create',
+        { amount: cartTotal * 100 }, // amount in paisa
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      const options = {
+        key: "YOUR_RAZORPAY_KEY_ID", // Replace with your actual Razorpay key ID
+        amount: cartTotal * 100,
+        currency: "INR",
+        name: "Your Store Name",
+        description: "Transaction for order",
+        order_id: orderResponse.data.id,
+        handler: async function (response) {
+          // Handle successful payment
+          try {
+            // Verify payment
+            const verifyResponse = await axios.post(
+              'http://localhost:2022/api/payments/razorpay/verify',
+              { 
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            if (verifyResponse.data.success) {
+              // Create order
+              await processOrder({
+                paymentMethod: 'razorpay',
+                paymentId: response.razorpay_payment_id
+              });
+            } else {
+              throw new Error('Payment verification failed');
+            }
+          } catch (err) {
+            console.error('Payment verification error:', err);
+            alert('Payment verification failed. Please contact support.');
+            setProcessingOrder(false);
+          }
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "9999999999"
+        },
+        theme: {
+          color: "#000000"
+        },
+        modal: {
+          ondismiss: function() {
+            setProcessingOrder(false);
+          }
+        }
+      };
+      
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+      
+    } catch (err) {
+      console.error('Error initiating Razorpay payment:', err);
+      alert('Failed to initialize payment. Please try again.');
+      setProcessingOrder(false);
+    }
+  };
 
+  const processOrder = async (paymentDetails) => {
+    try {
+      const token = Cookies.get('authToken');
+      
       const orderResponse = await axios.post(
         'http://localhost:2022/api/orders/create', 
         { 
           shippingAddressId: selectedAddressId,
           items: cartItems,
-          totalAmount: cartTotal
+          totalAmount: cartTotal,
+          paymentMethod: paymentDetails.paymentMethod,
+          paymentId: paymentDetails.paymentId || null
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -122,22 +207,40 @@ const OrderConfirmation = () => {
     } catch (err) {
       console.error('Error placing order:', err);
       alert('Failed to place order. Please try again.');
-    } finally {
       setProcessingOrder(false);
+    }
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!selectedAddressId) {
+      alert('Please select a shipping address');
+      return;
+    }
+    
+    if (paymentMethod === 'razorpay') {
+      handleRazorpayPayment();
+    } else {
+      // COD flow
+      try {
+        setProcessingOrder(true);
+        await processOrder({ paymentMethod: 'cod' });
+      } catch (err) {
+        console.error('Error placing COD order:', err);
+        alert('Failed to place order. Please try again.');
+        setProcessingOrder(false);
+      }
     }
   };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
         <div className="flex-grow flex justify-center items-center">
           <div className="flex flex-col items-center gap-3">
             <Loader className="animate-spin text-gray-500" size={32} />
             <p className="text-gray-500 text-base">Loading order details...</p>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -145,7 +248,6 @@ const OrderConfirmation = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
         <div className="flex-grow flex justify-center items-center">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 max-w-md w-full">
             <p className="text-red-500 text-lg mb-4 text-center">Error: {error}</p>
@@ -157,15 +259,12 @@ const OrderConfirmation = () => {
             </button>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navigation />
-      
       <main className="flex-grow mx-auto w-full max-w-screen-xl px-4 py-8">
         <div className="flex items-center gap-2 mb-6">
           <button 
@@ -248,9 +347,40 @@ const OrderConfirmation = () => {
             </div>
             
             <div className="p-6">
-              <div className="flex items-center gap-3">
-                <CreditCard className="text-gray-500" size={20} />
-                <span className="font-medium">Pay on Delivery</span>
+              <div className="space-y-4">
+                {/* Pay on Delivery option */}
+                <label className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="cod"
+                    checked={paymentMethod === 'cod'}
+                    onChange={() => setPaymentMethod('cod')}
+                    className="h-4 w-4 text-black"
+                  />
+                  <DollarSign className="text-gray-500" size={20} />
+                  <div>
+                    <span className="font-medium">Pay on Delivery</span>
+                    <p className="text-xs text-gray-500 mt-1">Pay with cash when your order is delivered</p>
+                  </div>
+                </label>
+                
+                {/* Razorpay option */}
+                <label className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="razorpay"
+                    checked={paymentMethod === 'razorpay'}
+                    onChange={() => setPaymentMethod('razorpay')}
+                    className="h-4 w-4 text-black"
+                  />
+                  <CreditCard className="text-gray-500" size={20} />
+                  <div>
+                    <span className="font-medium">Pay with Razorpay</span>
+                    <p className="text-xs text-gray-500 mt-1">Secure online payment via credit/debit card, UPI, or bank transfer</p>
+                  </div>
+                </label>
               </div>
             </div>
           </div>
@@ -308,7 +438,6 @@ const OrderConfirmation = () => {
           </div>
         </div>
       </main>
-      
     </div>
   );
 };

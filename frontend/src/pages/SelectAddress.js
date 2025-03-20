@@ -68,14 +68,14 @@ const SelectAddress = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
+        
         <div className="flex-grow flex justify-center items-center">
           <div className="flex flex-col items-center gap-3">
             <Loader className="animate-spin text-gray-500" size={32} />
             <p className="text-gray-500 text-base">Loading addresses...</p>
           </div>
         </div>
-        <Footer />
+        
       </div>
     );
   }
@@ -83,7 +83,7 @@ const SelectAddress = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
+        
         <div className="flex-grow flex justify-center items-center">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 max-w-md w-full">
             <p className="text-red-500 text-lg mb-4 text-center">Error: {error}</p>
@@ -95,14 +95,14 @@ const SelectAddress = () => {
             </button>
           </div>
         </div>
-        <Footer />
+        
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navigation />
+      
       
       <main className="flex-grow mx-auto w-full max-w-screen-xl px-4 py-8">
         <div className="flex items-center gap-2 mb-6">
