@@ -87,12 +87,12 @@ const MyOrders = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
+        
         <div className="flex-grow flex justify-center items-center">
           <Loader className="animate-spin text-gray-500" size={32} />
           <p className="text-gray-500 ml-2">Loading orders...</p>
         </div>
-        <Footer />
+        
       </div>
     );
   }
@@ -100,7 +100,7 @@ const MyOrders = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
+        
         <div className="flex-grow flex justify-center items-center">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 max-w-md w-full">
             <AlertCircle className="text-red-500" size={32} />
@@ -113,14 +113,14 @@ const MyOrders = () => {
             </button>
           </div>
         </div>
-        <Footer />
+        
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navigation />
+      
       
       <main className="flex-grow mx-auto w-full max-w-screen-xl px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">My Orders</h1>

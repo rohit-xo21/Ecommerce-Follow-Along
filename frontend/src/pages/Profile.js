@@ -230,21 +230,21 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
+        
         <div className="flex-grow flex justify-center items-center">
           <div className="flex flex-col items-center gap-2">
             <Loader className="animate-spin text-gray-500" size={32} />
             <p className="text-gray-500">Loading profile...</p>
           </div>
         </div>
-        <Footer />
+        
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navigation />
+      
       
       <main className="flex-grow mx-auto w-full max-w-screen-xl px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 pl-2">My Profile</h1>
@@ -353,7 +353,7 @@ const Profile = () => {
         setNewAddress={setNewAddress}
       />
       
-      <Footer />
+      
     </div>
   );
 };
