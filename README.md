@@ -335,3 +335,15 @@ In this milestone, we implemented the ability for users to **cancel their placed
 - **Updated the order status** to `"canceled"` and saved the changes.  
 
 ---  
+
+## Milestone 29: RazorPay Integration (Phase 1)  
+
+In this milestone, we implemented:  
+
+- **Created a RazorPay Developer Account** and set up a **sandbox account**.  
+- **Added payment options (Radio Buttons)** on the **Order Confirmation Page**:  
+  - **Cash on Delivery (COD)**  
+  - **Online Payment (RazorPay)**  
+- **Displayed RazorPay payment buttons dynamically** when "Online Payment" is selected.  
+
+---  
